@@ -19,8 +19,8 @@ public class RestController {
     @Value("${lastname.name}")
     private String lastName;
 
-    private Student uniMelbStudent;
-    private Student qutStudent;
+    private final Student uniMelbStudent;
+    private final Student qutStudent;
 
     @Autowired
     public RestController(@Qualifier("uniMelbStudent") Student uniMelbStudent,
@@ -31,12 +31,12 @@ public class RestController {
 
     @GetMapping("/student/unimelb")
     public String getUniMelbStudentName() {
-        return uniMelbStudent.getNameInfo() + getPersonalInfo();
+        return uniMelbStudent.getSchoolInfo() + getPersonalInfo();
     }
 
     @GetMapping("/student/qut")
     public String getQUTStudentName() {
-        return qutStudent.getNameInfo() + getPersonalInfo();
+        return qutStudent.getSchoolInfo() + getPersonalInfo();
     }
 
     @GetMapping("/personalinfo")

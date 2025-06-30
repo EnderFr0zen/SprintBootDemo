@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 public class UniMelbStudent implements Student {
 
     @Override
-    public String getNameInfo() {
-        return "UniMelb Student Name: ";
+    public String getSchoolInfo() {
+        return "UniMelb Student ";
     }
 }
