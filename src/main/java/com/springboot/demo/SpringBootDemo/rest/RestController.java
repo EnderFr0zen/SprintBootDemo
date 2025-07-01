@@ -18,7 +18,6 @@ public class RestController {
 
     @Value("${lastname.name}")
     private String lastName;
-
     private final Student uniMelbStudent;
     private final Student qutStudent;
 
