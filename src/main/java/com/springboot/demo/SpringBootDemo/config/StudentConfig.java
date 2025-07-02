@@ -1,7 +1,7 @@
 package com.springboot.demo.SpringBootDemo.config;
 
-import com.springboot.demo.SpringBootDemo.student.MonashStudent;
-import com.springboot.demo.SpringBootDemo.student.Student;
+import com.springboot.demo.SpringBootDemo.student.MonashUniversityStudent;
+import com.springboot.demo.SpringBootDemo.student.UniversityStudent;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 public class StudentConfig {
 
     @Bean("monashuni")
-    public Student monashStudent() {
-        return new MonashStudent();
+    public UniversityStudent monashStudent() {
+        return new MonashUniversityStudent();
     }
 }

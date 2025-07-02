@@ -1,6 +1,6 @@
 package com.springboot.demo.SpringBootDemo.student;
 
-public interface Student {
+public interface UniversityStudent {
 
     String getSchoolInfo();
 }

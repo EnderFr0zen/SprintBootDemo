@@ -1,6 +1,6 @@
 package com.springboot.demo.SpringBootDemo.rest;
 
-import com.springboot.demo.SpringBootDemo.student.Student;
+import com.springboot.demo.SpringBootDemo.student.UniversityStudent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,17 +18,17 @@ public class RestController {
 
     @Value("${lastname.name}")
     private String lastName;
-    private final Student uniMelbStudent;
-    private final Student qutStudent;
-    private final Student monashStudent;
+    private final UniversityStudent uniMelbStudent;
+    private final UniversityStudent qutStudent;
+    private final UniversityStudent monashUniversityStudent;
 
     @Autowired
-    public RestController(@Qualifier("uniMelbStudent") Student uniMelbStudent,
-                          @Qualifier("QUTStudent") Student qutStudent,
-                          @Qualifier("monashuni") Student monashStudent) {
+    public RestController(@Qualifier("uniMelbStudent") UniversityStudent uniMelbStudent,
+                          @Qualifier("QUTStudent") UniversityStudent qutStudent,
+                          @Qualifier("monashuni") UniversityStudent monashUniversityStudent) {
         this.uniMelbStudent = uniMelbStudent;
         this.qutStudent = qutStudent;
-        this.monashStudent = monashStudent;
+        this.monashUniversityStudent = monashUniversityStudent;
     }
 
     @GetMapping("/student/unimelb")
@@ -43,7 +43,7 @@ public class RestController {
 
     @GetMapping("/student/monash")
     public String getMonashStudentName() {
-        return monashStudent.getSchoolInfo() + getPersonalInfo();
+        return monashUniversityStudent.getSchoolInfo() + getPersonalInfo();
     }
 
     @GetMapping("/personalinfo")

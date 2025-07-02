@@ -3,7 +3,7 @@ package com.springboot.demo.SpringBootDemo.student;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 
-public class MonashStudent implements Student {
+public class MonashUniversityStudent implements UniversityStudent {
 
     @Override
     public String getSchoolInfo() {

@@ -5,7 +5,7 @@ import jakarta.annotation.PreDestroy;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UniMelbStudent implements Student {
+public class UniMelbStudent implements UniversityStudent {
 
     @Override
     public String getSchoolInfo() {
