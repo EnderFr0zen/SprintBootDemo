@@ -31,6 +31,11 @@ public class Student {
         this.email = email;
     }
 
+    public Student(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     // define getters/setters
     public int getId() {
         return id;
