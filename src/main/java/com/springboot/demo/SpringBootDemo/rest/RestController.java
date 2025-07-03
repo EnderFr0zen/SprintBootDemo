@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @org.springframework.web.bind.annotation.RestController
+@RequestMapping("/manual")
 public class RestController {
 
     // inject properties for: firstname.name, preferredname.name and lastname.name
@@ -37,7 +38,7 @@ public class RestController {
     // use service layer instead direct use EmployeeDAO
     private final EmployeeService employeeService;
 
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 
     private List<Student> students;
 
