@@ -22,7 +22,6 @@ public class StudentDAOImpl implements StudentDAO {
     }
 
     //implement save method
-
     @Override
     @Transactional
     public void save(Student student) {

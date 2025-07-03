@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class StudentConfig {
 
-    @Bean("monashuni")
+    @Bean("monashUni")
     public UniversityStudent monashStudent() {
         return new MonashUniversityStudent();
     }
