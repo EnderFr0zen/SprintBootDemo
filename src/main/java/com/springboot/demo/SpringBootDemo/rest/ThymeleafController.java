@@ -1,10 +1,15 @@
 package com.springboot.demo.SpringBootDemo.rest;
 
+import com.springboot.demo.SpringBootDemo.entity.Customer;
 import com.springboot.demo.SpringBootDemo.entity.Student;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -79,5 +84,33 @@ public class ThymeleafController {
         // log the input data
         System.out.println("student: " + student.getFirstName() + " " + student.getLastName());
         return "studentform-confirmation";
+    }
+
+    @GetMapping("/showcustomerform")
+    public String showCustomerForm(Model model){
+        Customer customer = new Customer();
+        model.addAttribute("customer", customer);
+        return "customerform-show";
+    }
+
+    @PostMapping("/processcustomerform")
+    public String processCustomerForm(@Valid @ModelAttribute("customer") Customer customer, BindingResult bindingResult){
+        System.out.println("Last Name: |" + customer.getLastName() + "|");
+        // for debugging tips for custom error names and put in messages.properties
+        System.out.println("Binding Result: " + bindingResult.toString());
+        if (bindingResult.hasErrors()) {
+            return "customerform-show";
+        } else {
+            return "customerform-confirmation";
+        }
+    }
+
+    // add an initbinder ... to convert trim input strings
+    // remove leading and trailing whitespace
+    // resolve issue for our validation
+    @InitBinder
+    public void initBinder(WebDataBinder webDataBinder) {
+        StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
+        webDataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
 }
