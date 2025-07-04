@@ -1,4 +1,4 @@
-package com.springboot.demo.SpringBootDemo.rest;
+package com.springboot.demo.SpringBootDemo.controller;
 
 import com.springboot.demo.SpringBootDemo.entity.Customer;
 import com.springboot.demo.SpringBootDemo.entity.Student;

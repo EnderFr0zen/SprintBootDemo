@@ -1,4 +1,4 @@
-package com.springboot.demo.SpringBootDemo.rest;
+package com.springboot.demo.SpringBootDemo.controller;
 
 import com.springboot.demo.SpringBootDemo.entity.StudentErrorResponse;
 import com.springboot.demo.SpringBootDemo.exception.StudentNotFoundException;
@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-@ControllerAdvice(assignableTypes = com.springboot.demo.SpringBootDemo.rest.RestController.class)
+@ControllerAdvice(assignableTypes = com.springboot.demo.SpringBootDemo.controller.RestController.class)
 public class RestExceptionController {
 
     // add an exception handler using @ExceptionHandler

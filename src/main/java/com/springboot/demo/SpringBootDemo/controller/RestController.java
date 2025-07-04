@@ -1,4 +1,4 @@
-package com.springboot.demo.SpringBootDemo.rest;
+package com.springboot.demo.SpringBootDemo.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
