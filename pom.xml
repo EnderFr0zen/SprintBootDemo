@@ -77,6 +77,12 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- ADD SUPPORT FOR THYMELEAF -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+
 		<!-- ADD SUPPORT FOR MYSQL DRIVER -->
 		<dependency>
 			<groupId>com.mysql</groupId>
