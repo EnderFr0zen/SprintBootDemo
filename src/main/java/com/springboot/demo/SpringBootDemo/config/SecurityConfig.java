@@ -5,33 +5,46 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+
+import javax.sql.DataSource;
 
 @Configuration
 public class SecurityConfig {
 
+    // add support for JDBC ... no more hardcoded users
     @Bean
-    public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
-        UserDetails cynwell = User.builder()
-                .username("cynwell")
-                .password("{noop}123")
-                .roles("ADMIN")
-                .build();
-        UserDetails ninni = User.builder()
-                .username("ninni")
-                .password("{noop}123")
-                .roles("MANAGER")
-                .build();
-        UserDetails inch = User.builder()
-                .username("inch")
-                .password("{noop}123")
-                .roles("EMPLOYEE")
-                .build();
-        return new InMemoryUserDetailsManager(cynwell, ninni, inch);
+    public UserDetailsManager userDetailsManager(DataSource dataSource) {
+        JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
+        // define query to retrieve a user by username
+        jdbcUserDetailsManager.setUsersByUsernameQuery("SELECT user_id, pw, active FROM members WHERE user_id=?");
+        // define query to retrieve the authorities/roles by username
+        jdbcUserDetailsManager.setAuthoritiesByUsernameQuery("SELECT user_id, role FROM roles WHERE user_id=?");
+        return jdbcUserDetailsManager;
     }
+
+    // hardcode in memory users
+//    @Bean
+//    public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
+//        UserDetails cynwell = User.builder()
+//                .username("cynwell")
+//                .password("{noop}123")
+//                .roles("ADMIN")
+//                .build();
+//        UserDetails ninni = User.builder()
+//                .username("ninni")
+//                .password("{noop}123")
+//                .roles("MANAGER")
+//                .build();
+//        UserDetails inch = User.builder()
+//                .username("inch")
+//                .password("{noop}123")
+//                .roles("EMPLOYEE")
+//                .build();
+//        return new InMemoryUserDetailsManager(cynwell, ninni, inch);
+//    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

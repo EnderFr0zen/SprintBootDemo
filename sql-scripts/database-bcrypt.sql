@@ -1,4 +1,5 @@
-USE `employee_directory`;
+CREATE DATABASE IF NOT EXISTS `student_tracker`;
+USE `student_tracker`;
 
 DROP TABLE IF EXISTS `authorities`;
 DROP TABLE IF EXISTS `users`;
@@ -26,9 +27,9 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` 
 VALUES 
-('john','{bcrypt}$2a$10$qeS0HEh7urweMojsnwNAR.vcXJeXR1UcMRZ2WcGQl9YeuspUdgF.q',1),
-('mary','{bcrypt}$2a$10$qeS0HEh7urweMojsnwNAR.vcXJeXR1UcMRZ2WcGQl9YeuspUdgF.q',1),
-('susan','{bcrypt}$2a$10$qeS0HEh7urweMojsnwNAR.vcXJeXR1UcMRZ2WcGQl9YeuspUdgF.q',1);
+('cynwell','{bcrypt}$2a$10$TTnM4FNoqZjwb5FqR5TCLuMR6T9OaiOOzgEPgRrtxM1mnMNB0ApvS',1),
+('ninni','{bcrypt}$2a$10$TTnM4FNoqZjwb5FqR5TCLuMR6T9OaiOOzgEPgRrtxM1mnMNB0ApvS',1),
+('inch','{bcrypt}$2a$10$TTnM4FNoqZjwb5FqR5TCLuMR6T9OaiOOzgEPgRrtxM1mnMNB0ApvS',1);
 
 
 --
@@ -48,9 +49,6 @@ CREATE TABLE `authorities` (
 
 INSERT INTO `authorities` 
 VALUES 
-('john','ROLE_EMPLOYEE'),
-('mary','ROLE_EMPLOYEE'),
-('mary','ROLE_MANAGER'),
-('susan','ROLE_EMPLOYEE'),
-('susan','ROLE_MANAGER'),
-('susan','ROLE_ADMIN');
+('cynwell','ROLE_ADMIN'),
+('ninni','ROLE_MANAGER'),
+('inch','ROLE_EMPLOYEE');
