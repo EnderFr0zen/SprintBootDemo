@@ -6,7 +6,12 @@
 </head>
 <body>
     <form th:action="@{/thymeleaf/processform}" method="GET">
-        <input type="text" name="name" placeholder="What's your name" />
+        <input type="text" name="name" placeholder="processform - name" />
+        <input type="submit" />
+    </form>
+    <br><br>
+    <form th:action="@{/thymeleaf/processbindparamform}" method="GET">
+        <input type="text" name="name" placeholder="processbindparamform - name" />
         <input type="submit" />
     </form>
 </body>
