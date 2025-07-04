@@ -80,10 +80,18 @@ public class ThymeleafController {
     }
 
     @PostMapping("/processstudentform")
-    public String processStudentForm(@ModelAttribute("student") Student student){
+    public String processStudentForm(@Valid @ModelAttribute("student") Student student, BindingResult bindingResult, Model model) {
         // log the input data
         System.out.println("student: " + student.getFirstName() + " " + student.getLastName());
-        return "studentform-confirmation";
+        if (bindingResult.hasErrors()) {
+            // Add these back to the model
+            model.addAttribute("countries", countries);
+            model.addAttribute("programminglanguages", programmingLanguages);
+            model.addAttribute("operatingsystems", operatingSystems);
+            return "studentform-show";
+        } else {
+            return "studentform-confirmation";
+        }
     }
 
     @GetMapping("/showcustomerform")

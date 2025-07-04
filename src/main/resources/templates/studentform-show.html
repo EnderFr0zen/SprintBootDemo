@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Student Registration Form</title>
+    <link rel='stylesheet' th:href="@{/css/demo.css}"/>
 </head>
 <body>
     <h3>Student Registration Form</h3>
@@ -25,6 +26,10 @@
         <br><br>
         Favourite Operating Systems:
         <input type="checkbox" th:field="*{operatingSystem}" th:each="operatingSystem : ${operatingsystems}" th:value="${operatingSystem}" th:text="${operatingSystem}" />
+        <br><br>
+        Course Code: <input type="text" th:field="*{courseCode}"/>
+        <!-- Add error message (if present) -->
+        <span th:if="${#fields.hasErrors('courseCode')}" th:errors="*{courseCode}" class="error"></span>
         <br><br>
         <input type="submit" value="Submit" />
     </form>

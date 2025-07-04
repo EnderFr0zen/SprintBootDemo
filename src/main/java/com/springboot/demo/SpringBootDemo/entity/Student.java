@@ -1,5 +1,6 @@
 package com.springboot.demo.SpringBootDemo.entity;
 
+import com.springboot.demo.SpringBootDemo.validation.CourseCode;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -18,6 +19,9 @@ public class Student {
 
     @Column(name="last_name")
     private String lastName;
+
+    @CourseCode(value="SWEN", message="must start with SWEN")
+    private String courseCode;
 
     private String country;
 
@@ -67,6 +71,14 @@ public class Student {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getCourseCode() {
+        return courseCode;
+    }
+
+    public void setCourseCode(String courseCode) {
+        this.courseCode = courseCode;
     }
 
     public String getCountry() {
