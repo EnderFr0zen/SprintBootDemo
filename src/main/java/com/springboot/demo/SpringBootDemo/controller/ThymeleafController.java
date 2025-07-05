@@ -1,7 +1,9 @@
 package com.springboot.demo.SpringBootDemo.controller;
 
 import com.springboot.demo.SpringBootDemo.entity.Customer;
+import com.springboot.demo.SpringBootDemo.entity.Employee;
 import com.springboot.demo.SpringBootDemo.entity.Student;
+import com.springboot.demo.SpringBootDemo.service.EmployeeService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,10 +29,57 @@ public class ThymeleafController {
     @Value("${operatingsystems}")
     private List<String> operatingSystems;
 
+    private EmployeeService  employeeService;
+
+    public ThymeleafController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
+
+    // add mapping for "/list"
+    @GetMapping("/listemployees")
+    public String listEmployees(Model model) {
+        List<Employee> employees = employeeService.findAll();
+        model.addAttribute("employees", employees);
+        return "employees/employee-list";
+    }
+
+    @GetMapping("/addemployee")
+    public String addEmployee(Model model) {
+        Employee employee = new Employee();
+        model.addAttribute("employee", employee);
+        return "employees/employee-form";
+    }
+
+    @PostMapping("/saveemployee")
+    public String saveEmployee(@ModelAttribute("employee") Employee employee) {
+        // save the employee
+        employeeService.save(employee);
+        // use a redirect to prevent duplicate submission
+        return "redirect:/thymeleaf/listemployees";
+    }
+
+    @GetMapping("/updateemployee")
+    public String updateEmployee(@RequestParam("employeeId") int id,  Model model) {
+        // get the employee from the service
+        Employee employee = employeeService.findById(id);
+        // set employee in the model to prepopulate the form
+        model.addAttribute("employee", employee);
+        // send over to our form
+        return "employees/employee-form";
+    }
+
+    @GetMapping("/deleteemployee")
+    public String deleteEmployee(@RequestParam("employeeId") int id) {
+        // delete the employee
+        employeeService.deleteById(id);
+        // redirect to the /thymeleaf/listemployees
+        return "redirect:/thymeleaf/listemployees";
+    }
+
     // need a controller method to show initial HTML form
     @GetMapping("/showform")
     public String showForm() {
-        return "thymeleafform-show";
+        return "thymeleafintros/thymeleafform-show";
     }
 
     // need a controller method to read form data and add data to the model
@@ -44,7 +93,7 @@ public class ThymeleafController {
         String message = "YO! " + name;
         // add message to the model
         model.addAttribute("message", message);
-        return "thymeleafform-process";
+        return "thymeleafintros/thymeleafform-process";
     }
 
     @GetMapping("/processbindparamform")
@@ -55,13 +104,13 @@ public class ThymeleafController {
         String message = "YO! SPRING BIND PARAM! " + name;
         // add message to the model
         model.addAttribute("message", message);
-        return "thymeleafform-process";
+        return "thymeleafintros/thymeleafform-process";
     }
 
     @RequestMapping("/hello")
     public String helloThymeleaf(Model model){
         model.addAttribute("date", java.time.LocalDateTime.now());
-        return "hellothymeleaf";
+        return "thymeleafintros/hellothymeleaf";
     }
 
     @GetMapping("/showstudentform")
@@ -76,7 +125,7 @@ public class ThymeleafController {
         model.addAttribute("programminglanguages", programmingLanguages);
         // add the list of operating systems to the model
         model.addAttribute("operatingsystems", operatingSystems);
-        return "studentform-show";
+        return "students/studentform-show";
     }
 
     @PostMapping("/processstudentform")
@@ -88,9 +137,9 @@ public class ThymeleafController {
             model.addAttribute("countries", countries);
             model.addAttribute("programminglanguages", programmingLanguages);
             model.addAttribute("operatingsystems", operatingSystems);
-            return "studentform-show";
+            return "students/studentform-show";
         } else {
-            return "studentform-confirmation";
+            return "students/studentform-confirmation";
         }
     }
 
@@ -98,7 +147,7 @@ public class ThymeleafController {
     public String showCustomerForm(Model model){
         Customer customer = new Customer();
         model.addAttribute("customer", customer);
-        return "customerform-show";
+        return "customers/customerform-show";
     }
 
     @PostMapping("/processcustomerform")
@@ -107,9 +156,9 @@ public class ThymeleafController {
         // for debugging tips for custom error names and put in messages.properties
         System.out.println("Binding Result: " + bindingResult.toString());
         if (bindingResult.hasErrors()) {
-            return "customerform-show";
+            return "customers/customerform-show";
         } else {
-            return "customerform-confirmation";
+            return "customers/customerform-confirmation";
         }
     }
 
