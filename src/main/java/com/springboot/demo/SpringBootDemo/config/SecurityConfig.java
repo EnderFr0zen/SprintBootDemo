@@ -50,9 +50,15 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(configurer ->
                 configurer
+                        .requestMatchers("/css/**").permitAll()
                         // permit all for Spring Doc
                         .requestMatchers("/api.docs").permitAll()
                         .requestMatchers("/api.docs.yaml").permitAll()
+                        // securitydemos permission
+                        .requestMatchers("/thymeleaf/home").hasAnyRole("EMPLOYEE", "MANAGER", "ADMIN")
+                        .requestMatchers("/thymeleaf/general").hasAnyRole("EMPLOYEE", "MANAGER", "ADMIN")
+                        .requestMatchers("/thymeleaf/leader").hasAnyRole("MANAGER", "ADMIN")
+                        .requestMatchers("/thymeleaf/system").hasRole("ADMIN")
                         // OPTIONS for all public
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         // GET, HEAD, OPTIONS for all Role
@@ -64,6 +70,20 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PATCH, "/**").hasAnyRole("MANAGER", "ADMIN")
                         // DELETE for ADMIN only
                         .requestMatchers(HttpMethod.DELETE, "/**").hasRole("ADMIN")
+                        .anyRequest().authenticated()
+        ).formLogin(form ->
+                form
+                        .loginPage("/thymeleaf/login")
+                        .loginProcessingUrl("/thymeleaf/authenticate")
+                        .defaultSuccessUrl("/thymeleaf/home", true) // 👈 always redirect here after login
+                        .permitAll()
+        ).logout(logout ->
+                logout
+                        .logoutUrl("/thymeleaf/logout")
+                        .permitAll()
+        ).exceptionHandling(configurer ->
+                configurer
+                        .accessDeniedPage("/thymeleaf/accessdenied")
         );
         // use HTTP Basic authentication
         http.httpBasic(Customizer.withDefaults());

@@ -20,9 +20,9 @@ CREATE TABLE `users` (
 --
 -- NOTE: The passwords are encrypted using BCrypt
 --
--- A generation tool is avail at: https://www.luv2code.com/generate-bcrypt-password
+-- A generation tool is avail at: https://www.bcryptcalculator.com
 --
--- Default passwords here are: fun123
+-- Default passwords here are: 123
 --
 
 INSERT INTO `users` 

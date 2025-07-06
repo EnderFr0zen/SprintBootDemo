@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+</head>
+<body>
+    <h2>Home Page</h2>
+    <hr>
+    <p>
+        Welcome to the Home Page!
+    </p>
+    <hr>
+    <!-- Display username and role -->
+    <p>
+        User: <span sec:authentication="principal.username"></span>
+        <br><br>
+        Role: <span sec:authentication="principal.authorities"></span>
+    </p>
+    <hr>
+    <!-- Add a link to point to /general ... this is for the Employee, Manager and Admin -->
+    <div sec:authorize="hasAnyRole('EMPLOYEE', 'MANAGER', 'ADMIN')">
+        <p>
+            <a th:href="@{/thymeleaf/general}">General</a>
+            (For all Employee, Manager and Admin)
+        </p>
+    </div>
+    <!-- Add a link to point to /leader ... this is for the Manager and Admin -->
+    <div sec:authorize="hasAnyRole('MANAGER', 'ADMIN')">
+        <p>
+            <a th:href="@{/thymeleaf/leader}">Leader</a>
+            (Only for Manager and Admin)
+        </p>
+    </div>
+    <!-- Add a link to point to /system ... this is for the Admin -->
+    <div sec:authorize="hasAnyRole('ADMIN')">
+        <p>
+            <a th:href="@{/thymeleaf/system}">System</a>
+            (Only for Admin)
+        </p>
+    </div>
+    <hr>
+    <!-- Add a logout button -->
+    <form action="#" th:action="@{/thymeleaf/logout}" method="POST">
+        <input type="submit" value="Logout" />
+    </form>
+</body>
+</html>

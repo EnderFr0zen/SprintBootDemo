@@ -1,4 +1,5 @@
-USE `employee_directory`;
+CREATE DATABASE IF NOT EXISTS `student_tracker`;
+USE `student_tracker`;
 
 DROP TABLE IF EXISTS `roles`;
 DROP TABLE IF EXISTS `members`;
@@ -19,16 +20,16 @@ CREATE TABLE `members` (
 --
 -- NOTE: The passwords are encrypted using BCrypt
 --
--- A generation tool is avail at: https://www.luv2code.com/generate-bcrypt-password
+-- A generation tool is avail at: https://www.bcryptcalculator.com
 --
--- Default passwords here are: fun123
+-- Default passwords here are: 123
 --
 
 INSERT INTO `members`
 VALUES
-('john','{bcrypt}$2a$10$qeS0HEh7urweMojsnwNAR.vcXJeXR1UcMRZ2WcGQl9YeuspUdgF.q',1),
-('mary','{bcrypt}$2a$10$qeS0HEh7urweMojsnwNAR.vcXJeXR1UcMRZ2WcGQl9YeuspUdgF.q',1),
-('susan','{bcrypt}$2a$10$qeS0HEh7urweMojsnwNAR.vcXJeXR1UcMRZ2WcGQl9YeuspUdgF.q',1);
+('cynwell','{bcrypt}$2a$10$TTnM4FNoqZjwb5FqR5TCLuMR6T9OaiOOzgEPgRrtxM1mnMNB0ApvS',1),
+('ninni','{bcrypt}$2a$10$TTnM4FNoqZjwb5FqR5TCLuMR6T9OaiOOzgEPgRrtxM1mnMNB0ApvS',1),
+('inch','{bcrypt}$2a$10$TTnM4FNoqZjwb5FqR5TCLuMR6T9OaiOOzgEPgRrtxM1mnMNB0ApvS',1);
 
 
 --
@@ -48,9 +49,6 @@ CREATE TABLE `roles` (
 
 INSERT INTO `roles`
 VALUES
-('john','ROLE_EMPLOYEE'),
-('mary','ROLE_EMPLOYEE'),
-('mary','ROLE_MANAGER'),
-('susan','ROLE_EMPLOYEE'),
-('susan','ROLE_MANAGER'),
-('susan','ROLE_ADMIN');
+('cynwell','ROLE_ADMIN'),
+('ninni','ROLE_MANAGER'),
+('inch','ROLE_EMPLOYEE');

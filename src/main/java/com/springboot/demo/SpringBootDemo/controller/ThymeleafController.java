@@ -35,6 +35,41 @@ public class ThymeleafController {
         this.employeeService = employeeService;
     }
 
+    @GetMapping("/home")
+    public String showHome() {
+        return "securitydemos/security-home";
+    }
+
+    @GetMapping("/login")
+    public String login(){
+//        return "securitydemos/security-login";
+        return "securitydemos/security-fancy-login";
+    }
+
+    // add request mapping for /accessdenied
+    @GetMapping("/accessdenied")
+    public String accessDenied(){
+        return "securitydemos/security-accessdenied";
+    }
+
+    // add a request for /general
+    @GetMapping("/general")
+    public String general(){
+        return "securitydemos/security-general";
+    }
+
+    // add a request for /leader
+    @GetMapping("/leader")
+    public String leader(){
+        return "securitydemos/security-leader";
+    }
+
+    // add a request for /system
+    @GetMapping("/system")
+    public String system(){
+        return "securitydemos/security-system";
+    }
+
     // add mapping for "/list"
     @GetMapping("/listemployees")
     public String listEmployees(Model model) {
