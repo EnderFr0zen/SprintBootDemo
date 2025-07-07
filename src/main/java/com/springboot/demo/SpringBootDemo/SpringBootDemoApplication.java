@@ -1,11 +1,15 @@
 package com.springboot.demo.SpringBootDemo;
 
+import com.springboot.demo.SpringBootDemo.dao.LearningAppDAO;
 import com.springboot.demo.SpringBootDemo.dao.StudentDAO;
+import com.springboot.demo.SpringBootDemo.entity.Instructor;
+import com.springboot.demo.SpringBootDemo.entity.InstructorDetail;
 import com.springboot.demo.SpringBootDemo.entity.Student;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 
 import java.util.List;
 
@@ -17,7 +21,48 @@ public class SpringBootDemoApplication {
 	}
 
 	@Bean
-	public CommandLineRunner commandLineRunner(StudentDAO studentDAO) {
+	@Profile("learningapp")
+	public CommandLineRunner learningAppCommandLineRunner(LearningAppDAO learningAppDAO) {
+		return runner -> {
+			createInstructor(learningAppDAO);
+			findInstructor(learningAppDAO);
+			deleteInstructor(learningAppDAO);
+		};
+	}
+
+	private void createInstructor(LearningAppDAO learningAppDAO) {
+		// create the instructor
+		Instructor instructor = new Instructor("Cynwell", "Liao", "cynwell@email.com");
+		// create the instructor detail
+		InstructorDetail instructorDetail = new InstructorDetail("https://www.youtube.com/@cynwell_1iao", "Learn Spring Boot!");
+		// associate the objects
+		instructor.setInstructorDetail(instructorDetail);
+		// save the instructor
+		// NOTE: this will also save the details object because of CascadeType.ALL in InstructorDetail class
+		System.out.println("Saving instructor: "  + instructor);
+		learningAppDAO.save(instructor);
+		System.out.println("Done");
+	}
+
+	private void findInstructor(LearningAppDAO learningAppDAO) {
+		int id = 1;
+		System.out.println("Finding instructor by id: " + id);
+		Instructor instructor = learningAppDAO.findInstructorById(id);
+		System.out.println("Found instructor: " + instructor);
+		System.out.println("The accociated instructorDetail only: " + instructor.getInstructorDetail());
+	}
+
+
+	private void deleteInstructor(LearningAppDAO learningAppDAO) {
+		int id = 1;
+		System.out.println("Deleting instructor by id: " + id);
+		learningAppDAO.deleteInstructorById(id);
+		System.out.println("Done");
+	}
+
+	@Bean
+	@Profile("student")
+	public CommandLineRunner studentCommandLineRunner(StudentDAO studentDAO) {
 		return runner -> {
 			createStudent(studentDAO);
 			createMultipleStudents(studentDAO);
