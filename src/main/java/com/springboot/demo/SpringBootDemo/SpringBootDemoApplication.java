@@ -33,6 +33,7 @@ public class SpringBootDemoApplication {
 			createInstructorWithCourses(learningAppDAO);
 //			findInstructorWithCourses(learningAppDAO);
 			findCoursesForInstructor(learningAppDAO);
+			findInstructorWithCoursesJoinFetch(learningAppDAO);
 		};
 	}
 
@@ -134,6 +135,16 @@ public class SpringBootDemoApplication {
 		instructor.setCourses(courses);
 		System.out.println("The associated courses: " + instructor.getCourses());
 		System.out.println("findCoursesForInstructor Done");
+	}
+
+	private void findInstructorWithCoursesJoinFetch(LearningAppDAO learningAppDAO) {
+		int id = 3;
+		// find the instructor
+		System.out.println("Finding instructor by id: " + id);
+		Instructor instructor = learningAppDAO.findInstructorByIdJoinFetch(id);
+		System.out.println("Instructor: " + instructor);
+		System.out.println("The  associated courses: " + instructor.getCourses());
+		System.out.println("findInstructorWithCoursesJoinFetch Done");
 	}
 
 	@Bean
