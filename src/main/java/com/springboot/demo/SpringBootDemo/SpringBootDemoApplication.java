@@ -31,6 +31,7 @@ public class SpringBootDemoApplication {
 			findInstructorDetail(learningAppDAO);
 			deleteInstructorDetail(learningAppDAO);
 			createInstructorWithCourses(learningAppDAO);
+			findInstructorWithCourses(learningAppDAO);
 		};
 	}
 
@@ -109,6 +110,15 @@ public class SpringBootDemoApplication {
 		System.out.println("The courses: " + instructor.getCourses());
 		learningAppDAO.save(instructor);
 		System.out.println("createInstructorWithCourses Done");
+	}
+
+	private void findInstructorWithCourses(LearningAppDAO learningAppDAO) {
+		int id = 3;
+		System.out.println("Finding instructor by id: " + id);
+		Instructor instructor = learningAppDAO.findInstructorById(id);
+		System.out.println("Instructor: " + instructor);
+		System.out.println("The associated courses: " + instructor.getCourses());
+		System.out.println("findInstructorWithCourses Done");
 	}
 
 	@Bean
