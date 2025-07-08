@@ -27,21 +27,28 @@ public class SpringBootDemoApplication {
 			createInstructor(learningAppDAO);
 			findInstructor(learningAppDAO);
 			deleteInstructor(learningAppDAO);
+			findInstructorDetail(learningAppDAO);
+			deleteInstructorDetail(learningAppDAO);
 		};
 	}
 
 	private void createInstructor(LearningAppDAO learningAppDAO) {
 		// create the instructor
-		Instructor instructor = new Instructor("Cynwell", "Liao", "cynwell@email.com");
+		Instructor instructor1 = new Instructor("Chad", "Darby", "luv2code@email.com");
+		Instructor instructor2 = new Instructor("Cynwell", "Liao", "cynwell@email.com");
 		// create the instructor detail
-		InstructorDetail instructorDetail = new InstructorDetail("https://www.youtube.com/@cynwell_1iao", "Learn Spring Boot!");
+		InstructorDetail instructorDetail1 = new InstructorDetail("https://www.youtube.com/@luv2code", "Luv 2 Code!");
+		InstructorDetail instructorDetail2 = new InstructorDetail("https://www.youtube.com/@cynwell_1iao", "Learn Spring Boot!");
 		// associate the objects
-		instructor.setInstructorDetail(instructorDetail);
+		instructor1.setInstructorDetail(instructorDetail1);
+		instructor2.setInstructorDetail(instructorDetail2);
 		// save the instructor
 		// NOTE: this will also save the details object because of CascadeType.ALL in InstructorDetail class
-		System.out.println("Saving instructor: "  + instructor);
-		learningAppDAO.save(instructor);
-		System.out.println("Done");
+		System.out.println("Saving instructor: "  + instructor1);
+		learningAppDAO.save(instructor1);
+		System.out.println("Saving instructor: "  + instructor2);
+		learningAppDAO.save(instructor2);
+		System.out.println("createInstructor Done");
 	}
 
 	private void findInstructor(LearningAppDAO learningAppDAO) {
@@ -50,14 +57,32 @@ public class SpringBootDemoApplication {
 		Instructor instructor = learningAppDAO.findInstructorById(id);
 		System.out.println("Found instructor: " + instructor);
 		System.out.println("The accociated instructorDetail only: " + instructor.getInstructorDetail());
+		System.out.println("findInstructor Done");
 	}
-
 
 	private void deleteInstructor(LearningAppDAO learningAppDAO) {
 		int id = 1;
 		System.out.println("Deleting instructor by id: " + id);
 		learningAppDAO.deleteInstructorById(id);
-		System.out.println("Done");
+		System.out.println("deleteInstructor Done");
+	}
+
+	private void findInstructorDetail(LearningAppDAO learningAppDAO) {
+		// get the instructor detail object
+		int id = 2;
+		InstructorDetail instructorDetail = learningAppDAO.findInstructorDetailById(id);
+		// print the instructor detail
+		System.out.println("Found instructorDetail: " + instructorDetail);
+		// print the associated instructor
+		System.out.println("The associated instructor: " + instructorDetail.getInstructor());
+		System.out.println("findInstructorDetail Done");
+	}
+
+	private void deleteInstructorDetail(LearningAppDAO learningAppDAO) {
+		int id = 2;
+		System.out.println("Deleting instructorDetail by id: " + id);
+		learningAppDAO.deleteInstructorDetailById(id);
+		System.out.println("deleteInstructorDetail Done");
 	}
 
 	@Bean

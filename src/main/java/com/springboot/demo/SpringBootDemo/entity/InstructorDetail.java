@@ -3,7 +3,7 @@ package com.springboot.demo.SpringBootDemo.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="one_to_one_uni_instructor_detail")
+@Table(name="one_to_one_instructor_detail")
 public class InstructorDetail {
 
     // annotate the class as an entity and map to database table
@@ -19,6 +19,11 @@ public class InstructorDetail {
 
     @Column(name="hobby")
     private String hobby;
+
+    // add @OneToOne annotation
+    // not CascadeType.REMOVE
+    @OneToOne(mappedBy = "instructorDetail", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    private Instructor instructor;
 
     // create constructors
     public InstructorDetail() {
@@ -53,6 +58,14 @@ public class InstructorDetail {
 
     public void setHobby(String hobby) {
         this.hobby = hobby;
+    }
+
+    public Instructor getInstructor() {
+        return instructor;
+    }
+
+    public void setInstructor(Instructor instructor) {
+        this.instructor = instructor;
     }
 
     // generate toString() method

@@ -3,7 +3,7 @@ package com.springboot.demo.SpringBootDemo.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="one_to_one_uni_instructor")
+@Table(name="one_to_one_instructor")
 public class Instructor {
 
     // annotate the class as an entity and map to database table

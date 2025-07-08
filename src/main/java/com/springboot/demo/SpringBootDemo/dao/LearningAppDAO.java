@@ -1,6 +1,7 @@
 package com.springboot.demo.SpringBootDemo.dao;
 
 import com.springboot.demo.SpringBootDemo.entity.Instructor;
+import com.springboot.demo.SpringBootDemo.entity.InstructorDetail;
 
 public interface LearningAppDAO {
 
@@ -9,4 +10,8 @@ public interface LearningAppDAO {
     Instructor findInstructorById(int id);
 
     void deleteInstructorById(int id);
+
+    InstructorDetail findInstructorDetailById(int id);
+
+    void deleteInstructorDetailById(int id);
 }

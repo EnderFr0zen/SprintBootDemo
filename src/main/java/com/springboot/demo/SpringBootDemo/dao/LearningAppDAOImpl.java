@@ -1,6 +1,7 @@
 package com.springboot.demo.SpringBootDemo.dao;
 
 import com.springboot.demo.SpringBootDemo.entity.Instructor;
+import com.springboot.demo.SpringBootDemo.entity.InstructorDetail;
 import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -36,5 +37,22 @@ public class LearningAppDAOImpl implements LearningAppDAO {
         Instructor instructor = entityManager.find(Instructor.class, id);
         // delete the instructor
         entityManager.remove(instructor);
+    }
+
+    @Override
+    public InstructorDetail findInstructorDetailById(int id) {
+        return entityManager.find(InstructorDetail.class, id);
+    }
+
+    @Override
+    @Transactional
+    public void deleteInstructorDetailById(int id) {
+        // retrieve instructor detail
+        InstructorDetail instructorDetail = entityManager.find(InstructorDetail.class, id);
+        // remove the associated object reference
+        // break bi-directional link
+        instructorDetail.getInstructor().setInstructorDetail(null);
+        // delete the instructorDetail
+        entityManager.remove(instructorDetail);
     }
 }
