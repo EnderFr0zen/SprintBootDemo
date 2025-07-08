@@ -2,6 +2,7 @@ package com.springboot.demo.SpringBootDemo;
 
 import com.springboot.demo.SpringBootDemo.dao.LearningAppDAO;
 import com.springboot.demo.SpringBootDemo.dao.StudentDAO;
+import com.springboot.demo.SpringBootDemo.entity.Course;
 import com.springboot.demo.SpringBootDemo.entity.Instructor;
 import com.springboot.demo.SpringBootDemo.entity.InstructorDetail;
 import com.springboot.demo.SpringBootDemo.entity.Student;
@@ -29,6 +30,7 @@ public class SpringBootDemoApplication {
 			deleteInstructor(learningAppDAO);
 			findInstructorDetail(learningAppDAO);
 			deleteInstructorDetail(learningAppDAO);
+			createInstructorWithCourses(learningAppDAO);
 		};
 	}
 
@@ -83,6 +85,30 @@ public class SpringBootDemoApplication {
 		System.out.println("Deleting instructorDetail by id: " + id);
 		learningAppDAO.deleteInstructorDetailById(id);
 		System.out.println("deleteInstructorDetail Done");
+	}
+
+
+	private void createInstructorWithCourses(LearningAppDAO learningAppDAO) {
+		// create the instructor
+		Instructor instructor = new Instructor("Chad", "Darby", "luv2code@email.com");
+		// create the instructor detail
+		InstructorDetail instructorDetail = new InstructorDetail("https://www.youtube.com/@luv2code", "Luv 2 Code!");
+		// associate the objects
+		instructor.setInstructorDetail(instructorDetail);
+		// create some courses
+		Course course1 = new Course("Spring Boot 3, Spring 6 & Hibernate for Beginners");
+		Course course2 = new Course("FastAPI - The Complete Course 2025 (Beginner + Advanced)");
+		Course course3 = new Course("Spring Boot Unit Testing with JUnit, Mockito and MockMvc");
+		// add courses to instructor
+		instructor.add(course1);
+		instructor.add(course2);
+		instructor.add(course3);
+		// save the instructor
+		// NOTE: this will also save the courses because of CascadeType.PERSIST
+		System.out.println("Saving instructor: "  + instructor);
+		System.out.println("The courses: " + instructor.getCourses());
+		learningAppDAO.save(instructor);
+		System.out.println("createInstructorWithCourses Done");
 	}
 
 	@Bean

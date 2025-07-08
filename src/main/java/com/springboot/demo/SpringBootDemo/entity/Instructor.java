@@ -2,8 +2,11 @@ package com.springboot.demo.SpringBootDemo.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
-@Table(name="one_to_one_instructor")
+@Table(name="one_to_many_instructor")
 public class Instructor {
 
     // annotate the class as an entity and map to database table
@@ -27,6 +30,9 @@ public class Instructor {
     @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="instructor_detail_id")
     private InstructorDetail instructorDetail;
+
+    @OneToMany(mappedBy="instructor", cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    private List<Course> courses;
 
     // create constructors
     public Instructor () {
@@ -78,6 +84,23 @@ public class Instructor {
 
     public void setInstructorDetail(InstructorDetail instructorDetail) {
         this.instructorDetail = instructorDetail;
+    }
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
+    }
+
+    // add convenience methods for bi-directional relationship
+    public void add(Course course) {
+        if  (this.courses == null) {
+            this.courses = new ArrayList<>();
+        }
+        courses.add(course);
+        course.setInstructor(this);
     }
 
     // generate toString() method
