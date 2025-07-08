@@ -6,13 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="one_to_many_uni_course")
+@Table(name="many_to_many_course")
 public class Course {
 
     // define fields
     // annotate fields
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="id")
     private int id;
 
@@ -26,6 +26,10 @@ public class Course {
     @OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinColumn(name="course_id")
     private List<Review> reviews;
+
+    @ManyToMany(fetch=FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinTable(name = "many_to_many_course_learner", joinColumns = @JoinColumn(name = "course_id"), inverseJoinColumns = @JoinColumn(name = "learner_id"))
+    private List<Learner> learners;
 
     // define constructors
     public Course() {
@@ -70,12 +74,28 @@ public class Course {
         this.reviews = reviews;
     }
 
-    // add a convenience method
+    public List<Learner> getLearners() {
+        return learners;
+    }
+
+    public void setLearners(List<Learner> learners) {
+        this.learners = learners;
+    }
+
+    // add a convenience method for add review to course
     public void addReview(Review review){
         if(reviews==null){
             reviews = new ArrayList<>();
         }
         reviews.add(review);
+    }
+
+    // add a convenience method for add learner to course
+    public void addLearner(Learner learner){
+        if(learners==null){
+            learners = new ArrayList<>();
+        }
+        learners.add(learner);
     }
 
     // define toString

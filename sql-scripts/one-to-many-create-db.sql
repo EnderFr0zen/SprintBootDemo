@@ -1,8 +1,8 @@
 USE `student_tracker`;
 
+DROP TABLE IF EXISTS `one_to_many_course`;
 DROP TABLE IF EXISTS `one_to_many_instructor`;
 DROP TABLE IF EXISTS `one_to_many_instructor_detail`;
-DROP TABLE IF EXISTS `one_to_many_course`;
 
 SET FOREIGN_KEY_CHECKS = 0;
 
@@ -36,6 +36,6 @@ CREATE TABLE `one_to_many_course` (
   FOREIGN KEY (`instructor_id`) 
   REFERENCES `one_to_many_instructor` (`id`) 
   ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10001 DEFAULT CHARSET=latin1;
 
 SET FOREIGN_KEY_CHECKS = 1;

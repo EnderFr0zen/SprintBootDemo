@@ -24,20 +24,24 @@ public class SpringBootDemoApplication {
 		return runner -> {
 			createInstructor(learningAppDAO);
 			findInstructor(learningAppDAO);
-//			deleteInstructor(learningAppDAO);
 			findInstructorDetail(learningAppDAO);
-			deleteInstructorDetail(learningAppDAO);
 			createInstructorWithCourses(learningAppDAO);
-//			findInstructorWithCourses(learningAppDAO);
+			findInstructorWithCourses(learningAppDAO);
 			findCoursesForInstructor(learningAppDAO);
 			findInstructorWithCoursesJoinFetch(learningAppDAO);
 			updateInstructor(learningAppDAO);
 			updateCourse(learningAppDAO);
 			deleteInstructor(learningAppDAO);
-			deleteCourse(learningAppDAO);
 			createCourseAndReviews(learningAppDAO);
 			retrieveCourseAndReviews(learningAppDAO);
 			deleteCourseAndReviews(learningAppDAO);
+			createCourseAndLearners(learningAppDAO);
+			findCourseAndLearners(learningAppDAO);
+			addMoreCoursesForLearner(learningAppDAO);
+			findLearnerAndCourses(learningAppDAO);
+			deleteInstructorDetail(learningAppDAO);
+			deleteInstructor(learningAppDAO);
+			deleteCourse(learningAppDAO);
 		};
 	}
 
@@ -121,7 +125,7 @@ public class SpringBootDemoApplication {
 	private void findInstructorWithCourses(LearningAppDAO learningAppDAO) {
 		int id = 3;
 		System.out.println("Finding instructor by id: " + id);
-		Instructor instructor = learningAppDAO.findInstructorById(id);
+		Instructor instructor = learningAppDAO.findInstructorByIdJoinFetch(id);
 		System.out.println("Instructor: " + instructor);
 		System.out.println("The associated courses: " + instructor.getCourses());
 		System.out.println("findInstructorWithCourses Done");
@@ -217,6 +221,54 @@ public class SpringBootDemoApplication {
 		System.out.println("deleteCourseAndReviews Done");
 	}
 
+	private void createCourseAndLearners(LearningAppDAO learningAppDAO) {
+		// create a course
+		Course course = new Course("Introduction to Java");
+		// create the students
+		Learner learner1 = new Learner("Cynwell", "Liao", "cynwell@email.com");
+		Learner learner2 = new Learner("Ninni", "Yang", "ninni@email.com");
+		// add students to the course
+		course.addLearner(learner1);
+		course.addLearner(learner2);
+		// save the course and associated students
+		System.out.println("Saving the course: " + course);
+		System.out.println("The associated learners: " + course.getLearners());
+		// this will Cascade save to entities
+		learningAppDAO.save(course);
+		System.out.println("createCourseAndLearners Done");
+	}
+
+	private void findCourseAndLearners(LearningAppDAO learningAppDAO) {
+		int id = 10005;
+		Course course = learningAppDAO.findCourseAndLearnersByCourseId(id);
+		System.out.println("Loaded course: " + course);
+		System.out.println("Learners: " + course.getLearners());
+		System.out.println("findCourseAndLearners Done");
+	}
+
+	private void findLearnerAndCourses(LearningAppDAO learningAppDAO) {
+		int id = 1;
+		Learner learner = learningAppDAO.findLearnerAndCoursesByLearnerId(id);
+		System.out.println("Loaded learner: " + learner);
+		System.out.println("Courses: " + learner.getCourses());
+		System.out.println("findLearnerAndCourses Done");
+	}
+
+	private void addMoreCoursesForLearner(LearningAppDAO learningAppDAO) {
+		int id = 1;
+		Learner learner = learningAppDAO.findLearnerAndCoursesByLearnerId(id);
+		// create more courses
+		Course course1 = new Course("Algorithms and Complexity");
+		Course course2 = new Course("Introduction to Spring Boot");
+		// add courses to learner
+		learner.addCourse(course1);
+		learner.addCourse(course2);
+		System.out.println("Updating learner: " + learner);
+		System.out.println("The associated courses: " + learner.getCourses());
+		learningAppDAO.update(learner);
+		System.out.println("addMoreCoursesForLearner Done");
+	}
+
 	@Bean
 	@Profile("student")
 	public CommandLineRunner studentCommandLineRunner(StudentDAO studentDAO) {
@@ -236,11 +288,9 @@ public class SpringBootDemoApplication {
 		// create the student object
 		System.out.println("Creating new student object ...");
 		Student student = new Student("Hsing-Wei", "Liao", "email@gmail.com");
-
 		// save the student object
 		System.out.println("Saving student object ...");
 		studentDAO.save(student);
-
 		//display id of the saved student
 		System.out.println("Saved student object. Generated id: " + student.getId());
 	}

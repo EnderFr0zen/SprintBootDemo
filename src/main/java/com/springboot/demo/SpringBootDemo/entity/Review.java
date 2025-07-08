@@ -3,12 +3,12 @@ package com.springboot.demo.SpringBootDemo.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="one_to_many_uni_review")
+@Table(name="many_to_many_review")
 public class Review {
     // define fields
     // annotate fields
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="id")
     private int id;
 

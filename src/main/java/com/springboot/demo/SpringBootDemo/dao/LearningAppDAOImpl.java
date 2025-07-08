@@ -1,8 +1,6 @@
 package com.springboot.demo.SpringBootDemo.dao;
 
-import com.springboot.demo.SpringBootDemo.entity.Course;
-import com.springboot.demo.SpringBootDemo.entity.Instructor;
-import com.springboot.demo.SpringBootDemo.entity.InstructorDetail;
+import com.springboot.demo.SpringBootDemo.entity.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,11 +37,16 @@ public class LearningAppDAOImpl implements LearningAppDAO {
     public void deleteInstructorById(int id) {
         // retrieve the instructor
         Instructor instructor = entityManager.find(Instructor.class, id);
+        if (instructor == null) {
+            System.out.println("Instructor with id " + id + " not found. Skipping delete.");
+            return;
+        }
         // get the courses
         List<Course> courses = instructor.getCourses();
-        // break association of all courses for the instructor
-        for (Course course : courses) {
-            course.setInstructor(null);
+        if (courses != null) {
+            for (Course course : courses) {
+                course.setInstructor(null);
+            }
         }
         // delete the instructor
         entityManager.remove(instructor);
@@ -126,5 +129,31 @@ public class LearningAppDAOImpl implements LearningAppDAO {
         // execute query
         Course course = query.getSingleResult();
         return course;
+    }
+
+    @Override
+    public Course findCourseAndLearnersByCourseId(int id) {
+        // create query
+        TypedQuery<Course> query = entityManager.createQuery("SELECT c FROM Course c JOIN FETCH c.learners WHERE c.id = :data", Course.class);
+        query.setParameter("data", id);
+        // execute query
+        Course course = query.getSingleResult();
+        return course;
+    }
+
+    @Override
+    public Learner findLearnerAndCoursesByLearnerId(int id) {
+        // create query
+        TypedQuery<Learner> query = entityManager.createQuery("SELECT l from Learner l JOIN FETCH l.courses WHERE l.id = :data", Learner.class);
+        query.setParameter("data", id);
+        // execute query
+        Learner learner = query.getSingleResult();
+        return learner;
+    }
+
+    @Override
+    @Transactional
+    public void update(Learner learner) {
+        entityManager.merge(learner);
     }
 }

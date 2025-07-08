@@ -6,13 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="many_to_many_instructor")
-public class Instructor {
-    // annotate the class as an entity and map to database table
-    // define the fields
-    // annotate the fields with database column names
+@Table(name="many_to_many_learner")
+public class Learner {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="id")
     private int id;
 
@@ -25,26 +23,19 @@ public class Instructor {
     @Column(name="email")
     private String email;
 
-    // set up mapping to InstructorDetail entity
-    @OneToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="instructor_detail_id")
-    private InstructorDetail instructorDetail;
-
-    @OneToMany(mappedBy="instructor", fetch=FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToMany(fetch=FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}, mappedBy="learners")
     private List<Course> courses;
 
-    // create constructors
-    public Instructor () {
+    public Learner() {
 
     }
 
-    public Instructor(String firstName, String lastName, String email) {
+    public Learner(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
     }
 
-    // generate getter/setter methods
     public int getId() {
         return id;
     }
@@ -77,14 +68,6 @@ public class Instructor {
         this.email = email;
     }
 
-    public InstructorDetail getInstructorDetail() {
-        return instructorDetail;
-    }
-
-    public void setInstructorDetail(InstructorDetail instructorDetail) {
-        this.instructorDetail = instructorDetail;
-    }
-
     public List<Course> getCourses() {
         return courses;
     }
@@ -93,24 +76,22 @@ public class Instructor {
         this.courses = courses;
     }
 
-    // add convenience methods for bi-directional relationship
-    public void add(Course course) {
-        if  (this.courses == null) {
-            this.courses = new ArrayList<>();
+    // add a convenience method for add course to learner
+    public void addCourse(Course course) {
+        if (courses == null) {
+            courses = new ArrayList<>();
         }
         courses.add(course);
-        course.setInstructor(this);
+        course.addLearner(this);
     }
 
-    // generate toString() method
     @Override
     public String toString() {
-        return "Instructor{" +
+        return "Learner{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
-                ", instructorDetail=" + instructorDetail +
                 '}';
     }
 }
