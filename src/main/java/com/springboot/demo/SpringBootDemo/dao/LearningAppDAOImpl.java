@@ -39,6 +39,12 @@ public class LearningAppDAOImpl implements LearningAppDAO {
     public void deleteInstructorById(int id) {
         // retrieve the instructor
         Instructor instructor = entityManager.find(Instructor.class, id);
+        // get the courses
+        List<Course> courses = instructor.getCourses();
+        // break association of all courses for the instructor
+        for (Course course : courses) {
+            course.setInstructor(null);
+        }
         // delete the instructor
         entityManager.remove(instructor);
     }
@@ -78,5 +84,31 @@ public class LearningAppDAOImpl implements LearningAppDAO {
         // execute query
         Instructor instructor = query.getSingleResult();
         return instructor;
+    }
+
+    @Override
+    @Transactional
+    public void update(Instructor instructor) {
+        entityManager.merge(instructor);
+    }
+
+    @Override
+    @Transactional
+    public void update(Course course) {
+        entityManager.merge(course);
+    }
+
+    @Override
+    public Course findCourseById(int id) {
+        return entityManager.find(Course.class, id);
+    }
+
+    @Override
+    @Transactional
+    public void deleteCourseById(int id) {
+        // retrieve the course
+        Course course = entityManager.find(Course.class, id);
+        // delete the course
+        entityManager.remove(course);
     }
 }

@@ -27,13 +27,17 @@ public class SpringBootDemoApplication {
 		return runner -> {
 			createInstructor(learningAppDAO);
 			findInstructor(learningAppDAO);
-			deleteInstructor(learningAppDAO);
+//			deleteInstructor(learningAppDAO);
 			findInstructorDetail(learningAppDAO);
 			deleteInstructorDetail(learningAppDAO);
 			createInstructorWithCourses(learningAppDAO);
 //			findInstructorWithCourses(learningAppDAO);
 			findCoursesForInstructor(learningAppDAO);
 			findInstructorWithCoursesJoinFetch(learningAppDAO);
+			updateInstructor(learningAppDAO);
+			updateCourse(learningAppDAO);
+			deleteInstructor(learningAppDAO);
+			deleteCourse(learningAppDAO);
 		};
 	}
 
@@ -66,7 +70,7 @@ public class SpringBootDemoApplication {
 	}
 
 	private void deleteInstructor(LearningAppDAO learningAppDAO) {
-		int id = 1;
+		int id = 3;
 		System.out.println("Deleting instructor by id: " + id);
 		learningAppDAO.deleteInstructorById(id);
 		System.out.println("deleteInstructor Done");
@@ -74,7 +78,7 @@ public class SpringBootDemoApplication {
 
 	private void findInstructorDetail(LearningAppDAO learningAppDAO) {
 		// get the instructor detail object
-		int id = 2;
+		int id = 1;
 		InstructorDetail instructorDetail = learningAppDAO.findInstructorDetailById(id);
 		// print the instructor detail
 		System.out.println("Found instructorDetail: " + instructorDetail);
@@ -145,6 +149,38 @@ public class SpringBootDemoApplication {
 		System.out.println("Instructor: " + instructor);
 		System.out.println("The  associated courses: " + instructor.getCourses());
 		System.out.println("findInstructorWithCoursesJoinFetch Done");
+	}
+
+
+	private void updateInstructor(LearningAppDAO learningAppDAO) {
+		int id = 3;
+		// find the instructor
+		System.out.println("Finding instructor id: " + id);
+		Instructor instructor = learningAppDAO.findInstructorById(id);
+		// update the instructor
+		System.out.println("Updating instructor id: " + id);
+		instructor.setLastName("TEST");
+		learningAppDAO.update(instructor);
+		System.out.println("updateInstructor Done");
+	}
+
+	private void updateCourse(LearningAppDAO learningAppDAO) {
+		int id = 10001;
+		// find the course
+		System.out.println("Finding course id: " + id);
+		Course course = learningAppDAO.findCourseById(id);
+		// update the course
+		System.out.println("Updating course id: " + id);
+		course.setTitle("[NEW] Spring Boot 3, Spring 6 & Hibernate for Beginners");
+		learningAppDAO.update(course);
+		System.out.println("updateCourse Done");
+	}
+
+	private void deleteCourse(LearningAppDAO learningAppDAO) {
+		int id = 10002;
+		System.out.println("Deleting course id: " + id);
+		learningAppDAO.deleteCourseById(id);
+		System.out.println("deleteCourse Done");
 	}
 
 	@Bean
