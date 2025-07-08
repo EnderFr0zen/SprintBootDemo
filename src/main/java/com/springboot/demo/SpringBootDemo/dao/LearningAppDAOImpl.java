@@ -1,11 +1,15 @@
 package com.springboot.demo.SpringBootDemo.dao;
 
+import com.springboot.demo.SpringBootDemo.entity.Course;
 import com.springboot.demo.SpringBootDemo.entity.Instructor;
 import com.springboot.demo.SpringBootDemo.entity.InstructorDetail;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Repository
 public class LearningAppDAOImpl implements LearningAppDAO {
@@ -54,5 +58,15 @@ public class LearningAppDAOImpl implements LearningAppDAO {
         instructorDetail.getInstructor().setInstructorDetail(null);
         // delete the instructorDetail
         entityManager.remove(instructorDetail);
+    }
+
+    @Override
+    public List<Course> findCoursesByInstructorId(int id) {
+        // create query
+        TypedQuery<Course> query  = entityManager.createQuery("FROM Course WHERE instructor.id = :data", Course.class);
+        query.setParameter("data", id);
+        // execute query
+        List<Course> courses = query.getResultList();
+        return courses;
     }
 }

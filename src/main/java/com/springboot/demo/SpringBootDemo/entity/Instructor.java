@@ -8,7 +8,6 @@ import java.util.List;
 @Entity
 @Table(name="one_to_many_instructor")
 public class Instructor {
-
     // annotate the class as an entity and map to database table
     // define the fields
     // annotate the fields with database column names
@@ -31,7 +30,7 @@ public class Instructor {
     @JoinColumn(name="instructor_detail_id")
     private InstructorDetail instructorDetail;
 
-    @OneToMany(mappedBy="instructor", fetch=FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @OneToMany(mappedBy="instructor", fetch=FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     private List<Course> courses;
 
     // create constructors

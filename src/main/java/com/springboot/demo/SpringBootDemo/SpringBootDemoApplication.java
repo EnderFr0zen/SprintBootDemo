@@ -31,7 +31,8 @@ public class SpringBootDemoApplication {
 			findInstructorDetail(learningAppDAO);
 			deleteInstructorDetail(learningAppDAO);
 			createInstructorWithCourses(learningAppDAO);
-			findInstructorWithCourses(learningAppDAO);
+//			findInstructorWithCourses(learningAppDAO);
+			findCoursesForInstructor(learningAppDAO);
 		};
 	}
 
@@ -119,6 +120,20 @@ public class SpringBootDemoApplication {
 		System.out.println("Instructor: " + instructor);
 		System.out.println("The associated courses: " + instructor.getCourses());
 		System.out.println("findInstructorWithCourses Done");
+	}
+
+	private void findCoursesForInstructor(LearningAppDAO learningAppDAO) {
+		int id = 3;
+		System.out.println("Finding instructor by id: " + id);
+		Instructor instructor = learningAppDAO.findInstructorById(id);
+		System.out.println("Instructor: " + instructor);
+		// find courses for instructor
+		System.out.println("Finding Courses for instructor id: " + id);
+		List<Course> courses = learningAppDAO.findCoursesByInstructorId(id);
+		// associate the objects
+		instructor.setCourses(courses);
+		System.out.println("The associated courses: " + instructor.getCourses());
+		System.out.println("findCoursesForInstructor Done");
 	}
 
 	@Bean
