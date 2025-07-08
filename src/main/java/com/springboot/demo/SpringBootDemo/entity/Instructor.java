@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="one_to_many_instructor")
+@Table(name="one_to_many_uni_instructor")
 public class Instructor {
     // annotate the class as an entity and map to database table
     // define the fields

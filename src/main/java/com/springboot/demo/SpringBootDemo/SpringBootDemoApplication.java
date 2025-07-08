@@ -2,10 +2,7 @@ package com.springboot.demo.SpringBootDemo;
 
 import com.springboot.demo.SpringBootDemo.dao.LearningAppDAO;
 import com.springboot.demo.SpringBootDemo.dao.StudentDAO;
-import com.springboot.demo.SpringBootDemo.entity.Course;
-import com.springboot.demo.SpringBootDemo.entity.Instructor;
-import com.springboot.demo.SpringBootDemo.entity.InstructorDetail;
-import com.springboot.demo.SpringBootDemo.entity.Student;
+import com.springboot.demo.SpringBootDemo.entity.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -38,6 +35,9 @@ public class SpringBootDemoApplication {
 			updateCourse(learningAppDAO);
 			deleteInstructor(learningAppDAO);
 			deleteCourse(learningAppDAO);
+			createCourseAndReviews(learningAppDAO);
+			retrieveCourseAndReviews(learningAppDAO);
+			deleteCourseAndReviews(learningAppDAO);
 		};
 	}
 
@@ -181,6 +181,40 @@ public class SpringBootDemoApplication {
 		System.out.println("Deleting course id: " + id);
 		learningAppDAO.deleteCourseById(id);
 		System.out.println("deleteCourse Done");
+	}
+
+	private void createCourseAndReviews(LearningAppDAO learningAppDAO) {
+		// create a course
+		Course course = new Course("Pacman - How To Score One Million Points");
+		// add some reviews
+		course.addReview(new Review("Great course ... loved it!"));
+		course.addReview(new Review("Cool course ... well done!"));
+		course.addReview(new Review("Ohh ..."));
+		// save the course ... and leverage the cascade all
+		System.out.println("Saving the course");
+		System.out.println(course);
+		System.out.println(course.getReviews());
+		learningAppDAO.save(course);
+		System.out.println("createCourseAndReviews Done");
+	}
+
+	private void retrieveCourseAndReviews(LearningAppDAO learningAppDAO) {
+		// get the course and reviews
+		int id = 10004;
+		Course course = learningAppDAO.findCourseAndReviewsByCourseId(id);
+		// print the course
+		System.out.println(course);
+		// print the reviews
+		System.out.println(course.getReviews());
+		System.out.println("retrieveCourseAndReviews Done");
+	}
+
+	private void deleteCourseAndReviews(LearningAppDAO learningAppDAO) {
+		int id = 10004;
+		System.out.println("Deleting course id: " + id);
+		// this will Cascade delete the course reviews
+		learningAppDAO.deleteCourseById(id);
+		System.out.println("deleteCourseAndReviews Done");
 	}
 
 	@Bean
