@@ -17,7 +17,7 @@ public class LoggingAspect {
 
     // this is where we add all of our related advices for logging
     // @Before advice
-    @Before("com.springboot.demo.SpringBootDemo.aspect.PointcutExpression.forDaoPackage()")
+    @Before("com.springboot.demo.SpringBootDemo.aspect.PointcutExpression.forAccountDAO()")
     public void beforeAdvice(JoinPoint joinPoint) {
         System.out.println("\n --- Executing @Before Advice Using Pointcut Declarations on any return type * com.springboot.demo.SpringBootDemo.dao.*.*(..) ---");
         // display the method signature

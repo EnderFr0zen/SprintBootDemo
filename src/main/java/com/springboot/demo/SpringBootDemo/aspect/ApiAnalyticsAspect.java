@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Order(2)
 public class ApiAnalyticsAspect {
 
-    @Before("com.springboot.demo.SpringBootDemo.aspect.PointcutExpression.forDaoPackageNoGetterSetter()")
+    @Before("com.springboot.demo.SpringBootDemo.aspect.PointcutExpression.forAccountDAONoGetterSetter()")
     public void performApiAnalyticsAdvice() {
         System.out.println("\n --- Perform Api Analytics Executing @Before Advice Using Pointcut Declarations forDaoPackageNoGetterSetter() ---");
     }
