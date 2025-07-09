@@ -35,15 +35,15 @@ Throughout this process, I spent hours debugging, refactoring, and experimenting
 
 ---
 
-## Project Structure at a Glance
+## Codebase Structure
 
 ```
-SprintBootDemo/                                   (root)
-├── .mvn/                                         Maven wrapper
+SprintBootDemo/ (root)
+├── .mvn/
 │   └── wrapper/
 │       ├── maven-wrapper.jar
 │       └── maven-wrapper.properties
-├── sql-scripts/                                  All your `.sql` DDL/DML scripts for MySQL setup
+├── sql-scripts/
 │   ├── create-db-user.sql
 │   ├── create-users-and-authorities.sql
 │   ├── create-members-and-roles.sql
@@ -57,7 +57,7 @@ SprintBootDemo/                                   (root)
 │   └── main/
 │       ├── java/
 │       │   └── com/springboot/demo/SpringBootDemo/
-│       │       ├── SpringBootDemoApplication.java              (main class)
+│       │       ├── SpringBootDemoApplication.java (main class)
 │       │       ├── config/
 │       │       │   ├── SecurityConfig.java
 │       │       │   └── StudentConfig.java
@@ -146,7 +146,7 @@ SprintBootDemo/                                   (root)
 
 ## Final Thoughts
 
-This repo captures my hands-on journey through Spring Boot. By uniting these exercises, I’ve gained real experience in:
+This repo captures my hands-on journey through a comprehensive Spring Boot course on Udemy. By uniting these exercises, I’ve gained real experience in:
 
 - Navigating a growing codebase
 - Debugging subtle conflicts
