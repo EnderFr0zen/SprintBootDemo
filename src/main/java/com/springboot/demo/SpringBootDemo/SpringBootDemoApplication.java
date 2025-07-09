@@ -27,11 +27,12 @@ public class SpringBootDemoApplication {
 			demoBeforeAdvice(accountDAO, membershipDAO);
 			demoAfterReturningAdvice(accountDAO);
 			demoAfterThrowingAdvice(accountDAO);
+			demoAfterAdvice(accountDAO);
 		};
 	}
 
 	private void demoBeforeAdvice(AccountDAO accountDAO, MembershipDAO membershipDAO) {
-		System.out.println("|demoBeforeAdvice|");
+		System.out.println("\n| demoBeforeAdvice |");
 		// call the business method
 		Account account = new Account("Cynwell", "Diamond");
 		accountDAO.addAccount(account, true);
@@ -47,7 +48,7 @@ public class SpringBootDemoApplication {
 	}
 
 	private void demoAfterReturningAdvice(AccountDAO accountDAO) {
-		System.out.println("|demoAfterReturningAdvice|");
+		System.out.println("\n| demoAfterReturningAdvice |");
 		// call method to find the accounts
 		List<Account> accounts = accountDAO.findAccounts();
 		// display accounts
@@ -55,12 +56,27 @@ public class SpringBootDemoApplication {
 	}
 
 	private void demoAfterThrowingAdvice(AccountDAO accountDAO) {
-		System.out.println("|demoAfterThrowingAdvice|");
+		System.out.println("\n| demoAfterThrowingAdvice |");
 		// call method to find the accounts
 		List<Account> accounts = null;
 		try {
 			// add a boolean flag to simulate exceptions
 			boolean tripWire = true;
+			accounts = accountDAO.findAccounts(tripWire);
+		} catch (Exception e) {
+			System.out.println("Catch Exception: " + e.getMessage());
+		}
+		// display accounts
+		System.out.println(accounts);
+	}
+
+	private void demoAfterAdvice(AccountDAO accountDAO) {
+		System.out.println("\n| demoAfterAdvice |");
+		// call method to find the accounts
+		List<Account> accounts = null;
+		try {
+			// add a boolean flag to simulate exceptions
+			boolean tripWire = false;
 			accounts = accountDAO.findAccounts(tripWire);
 		} catch (Exception e) {
 			System.out.println("Catch Exception: " + e.getMessage());
