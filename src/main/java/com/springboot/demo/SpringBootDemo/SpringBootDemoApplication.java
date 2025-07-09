@@ -24,11 +24,13 @@ public class SpringBootDemoApplication {
 	@Profile("springaop")
 	public CommandLineRunner springAOPCommandLineRunner(AccountDAO accountDAO, MembershipDAO membershipDAO) {
 		return runner -> {
-			demoTheBeforeAdvice(accountDAO, membershipDAO);
+			demoBeforeAdvice(accountDAO, membershipDAO);
+			demoAfterReturningAdvice(accountDAO);
 		};
 	}
 
-	private void demoTheBeforeAdvice(AccountDAO accountDAO, MembershipDAO membershipDAO) {
+	private void demoBeforeAdvice(AccountDAO accountDAO, MembershipDAO membershipDAO) {
+		System.out.println("|demoBeforeAdvice|");
 		// call the business method
 		Account account = new Account("Cynwell", "Diamond");
 		accountDAO.addAccount(account, true);
@@ -41,6 +43,14 @@ public class SpringBootDemoApplication {
 		accountDAO.setServiceCode("Diamond");
 		String name = accountDAO.getName();
 		String serviceCode = accountDAO.getServiceCode();
+	}
+
+	private void demoAfterReturningAdvice(AccountDAO accountDAO) {
+		System.out.println("|demoAfterReturningAdvice|");
+		// call method to find the accounts
+		List<Account> accounts = accountDAO.findAccounts();
+		// display accounts
+		System.out.println(accounts);
 	}
 
 	@Bean

@@ -2,6 +2,8 @@ package com.springboot.demo.SpringBootDemo.dao;
 
 import com.springboot.demo.SpringBootDemo.entity.Account;
 
+import java.util.List;
+
 public interface AccountDAO {
 
     void addAccount(Account account, boolean vipFlag);
@@ -9,11 +11,13 @@ public interface AccountDAO {
     boolean doWork();
 
     // for practice AOP Combining Pointcuts concept only
-    public String getName();
+    String getName();
 
-    public void setName(String name);
+    void setName(String name);
 
-    public String getServiceCode();
+    String getServiceCode();
 
-    public void setServiceCode(String serviceCode);
+    void setServiceCode(String serviceCode);
+
+    List<Account> findAccounts();
 }
