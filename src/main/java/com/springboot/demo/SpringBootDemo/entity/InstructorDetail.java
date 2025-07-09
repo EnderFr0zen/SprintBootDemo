@@ -3,26 +3,26 @@ package com.springboot.demo.SpringBootDemo.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="many_to_many_instructor_detail")
+@Table(name = "many_to_many_instructor_detail")
 public class InstructorDetail {
 
     // annotate the class as an entity and map to database table
     // define the fields
     // annotate the fields with database column names
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
 
-    @Column(name="youtube_channel")
+    @Column(name = "youtube_channel")
     private String youtubeChannel;
 
-    @Column(name="hobby")
+    @Column(name = "hobby")
     private String hobby;
 
     // add @OneToOne annotation
     // not CascadeType.REMOVE
-    @OneToOne(mappedBy="instructorDetail", cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @OneToOne(mappedBy = "instructorDetail", cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private Instructor instructor;
 
     // create constructors
