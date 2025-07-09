@@ -30,6 +30,7 @@ public class SpringBootDemoApplication {
 			demoAfterThrowingAdvice(accountDAO);
 			demoAfterAdvice(accountDAO);
 			demoAroundAdvice(trafficFortuneService);
+			demoAroundAdviceHandleException(trafficFortuneService);
 		};
 	}
 
@@ -91,6 +92,14 @@ public class SpringBootDemoApplication {
 		System.out.println("\n| demoAroundAdvice |");
 		System.out.println("Calling getFortune()");
 		String fortune = trafficFortuneService.getFortune();
+		System.out.println("Fortune: " + fortune);
+	}
+
+	private void demoAroundAdviceHandleException(TrafficFortuneService trafficFortuneService) {
+		System.out.println("\n| demoAroundAdviceHandleException |");
+		System.out.println("Calling getFortune()");
+		boolean tripWire = true;
+		String fortune = trafficFortuneService.getFortune(tripWire);
 		System.out.println("Fortune: " + fortune);
 	}
 

@@ -84,14 +84,22 @@ public class LoggingAspect {
         String method = proceedingJoinPoint.getSignature().toShortString();
         System.out.println("\n --- Executing @Around Advice on " + method + " ---");
         // get begin timestamp
-        long startTime = System.currentTimeMillis();
+        long startTime = System.nanoTime();
         // execute the method
-        Object result = proceedingJoinPoint.proceed();
+        Object result = null;
+        try {
+            result = proceedingJoinPoint.proceed();
+        } catch (Exception e) {
+            // log the exception
+            System.out.println(e.getMessage());
+            // give user custom message
+            result = "Major accident! Exception Handled!";
+        }
         // get end timestamp
-        long endTime = System.currentTimeMillis();
+        long endTime = System.nanoTime();
         // compute duration and display it
         long executionTime = endTime - startTime;
-        System.out.println("Execution time: " + (executionTime / 1000.0) + " seconds ---");
+        System.out.println("Execution time: " + executionTime + " nanoseconds");
         return result;
     }
 
