@@ -83,6 +83,12 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- ADD SUPPORT FOR SPRING AOP -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+
 		<!-- ADD SUPPORT FOR THYMELEAF -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

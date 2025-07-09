@@ -1,6 +1,8 @@
 package com.springboot.demo.SpringBootDemo;
 
+import com.springboot.demo.SpringBootDemo.dao.AccountDAO;
 import com.springboot.demo.SpringBootDemo.dao.LearningAppDAO;
+import com.springboot.demo.SpringBootDemo.dao.MembershipDAO;
 import com.springboot.demo.SpringBootDemo.dao.StudentDAO;
 import com.springboot.demo.SpringBootDemo.entity.*;
 import org.springframework.boot.CommandLineRunner;
@@ -16,6 +18,24 @@ public class SpringBootDemoApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBootDemoApplication.class, args);
+	}
+
+	@Bean
+	@Profile("springaop")
+	public CommandLineRunner springAOPCommandLineRunner(AccountDAO accountDAO, MembershipDAO membershipDAO) {
+		return runner -> {
+			demoTheBeforeAdvice(accountDAO, membershipDAO);
+		};
+	}
+
+	private void demoTheBeforeAdvice(AccountDAO accountDAO, MembershipDAO membershipDAO) {
+		// call the business method
+		Account account = new Account("Cynwell", "Diamond");
+		accountDAO.addAccount(account, true);
+		accountDAO.doWork();
+		membershipDAO.addAccount();
+		membershipDAO.addStar();
+		membershipDAO.addBoolean();
 	}
 
 	@Bean
