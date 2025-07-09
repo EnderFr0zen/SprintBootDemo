@@ -51,6 +51,23 @@ public class AccountDAOImpl implements AccountDAO {
 
     @Override
     public List<Account> findAccounts() {
+//        List<Account> accounts = new ArrayList<>();
+//        // create sample accounts
+//        Account account1 = new Account("Ninni", "Platinum");
+//        Account account2 = new Account("Inch", "Gold");
+//        // add them to accounts list
+//        accounts.add(account1);
+//        accounts.add(account2);
+//        return accounts;
+        return findAccounts(false);
+    }
+
+    @Override
+    public List<Account> findAccounts(boolean tripWire) {
+        // simulate an exception
+        if (tripWire) {
+            throw new RuntimeException("RuntimeException!");
+        }
         List<Account> accounts = new ArrayList<>();
         // create sample accounts
         Account account1 = new Account("Ninni", "Platinum");

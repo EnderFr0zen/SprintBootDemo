@@ -3,6 +3,7 @@ package com.springboot.demo.SpringBootDemo.aspect;
 import com.springboot.demo.SpringBootDemo.entity.Account;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -61,6 +62,15 @@ public class LoggingAspect {
             // update the name on the account
             account.setName(upperCaseName);
         }
+    }
+
+    @AfterThrowing(pointcut = "execution(* com.springboot.demo.SpringBootDemo.dao.AccountDAO.findAccounts(..))", throwing = "exception")
+    public void afterThrowingFindAccountsAdvice(JoinPoint joinPoint, Throwable exception) {
+        // print out which method we are advising on
+        String method = joinPoint.getSignature().toShortString();
+        System.out.println("\n --- Executing @AfterThrowing Advice on " + method + " ---");
+        // log the exception
+        System.out.println("@AfterThrowing Exception: " + exception);
     }
 
 //    @Before("execution(* com.springboot.demo.SpringBootDemo.dao.*.*(..))")

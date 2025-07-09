@@ -20,4 +20,6 @@ public interface AccountDAO {
     void setServiceCode(String serviceCode);
 
     List<Account> findAccounts();
+
+    List<Account> findAccounts(boolean tripWire);
 }

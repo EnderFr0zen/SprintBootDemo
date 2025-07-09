@@ -26,6 +26,7 @@ public class SpringBootDemoApplication {
 		return runner -> {
 			demoBeforeAdvice(accountDAO, membershipDAO);
 			demoAfterReturningAdvice(accountDAO);
+			demoAfterThrowingAdvice(accountDAO);
 		};
 	}
 
@@ -49,6 +50,21 @@ public class SpringBootDemoApplication {
 		System.out.println("|demoAfterReturningAdvice|");
 		// call method to find the accounts
 		List<Account> accounts = accountDAO.findAccounts();
+		// display accounts
+		System.out.println(accounts);
+	}
+
+	private void demoAfterThrowingAdvice(AccountDAO accountDAO) {
+		System.out.println("|demoAfterThrowingAdvice|");
+		// call method to find the accounts
+		List<Account> accounts = null;
+		try {
+			// add a boolean flag to simulate exceptions
+			boolean tripWire = true;
+			accounts = accountDAO.findAccounts(tripWire);
+		} catch (Exception e) {
+			System.out.println("Catch Exception: " + e.getMessage());
+		}
 		// display accounts
 		System.out.println(accounts);
 	}
