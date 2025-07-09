@@ -36,6 +36,11 @@ public class SpringBootDemoApplication {
 		membershipDAO.addAccount();
 		membershipDAO.addStar();
 		membershipDAO.addBoolean();
+		// call getters/setters for practice AOP Combining Pointcuts concept
+		accountDAO.setName("Cynwell");
+		accountDAO.setServiceCode("Diamond");
+		String name = accountDAO.getName();
+		String serviceCode = accountDAO.getServiceCode();
 	}
 
 	@Bean
