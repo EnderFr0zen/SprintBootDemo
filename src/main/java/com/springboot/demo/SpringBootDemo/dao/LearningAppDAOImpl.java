@@ -156,4 +156,21 @@ public class LearningAppDAOImpl implements LearningAppDAO {
     public void update(Learner learner) {
         entityManager.merge(learner);
     }
+
+    @Override
+    @Transactional
+    public void deleteLearnerById(int id) {
+        // retrieve learner
+        Learner learner = entityManager.find(Learner.class, id);
+        if (learner != null) {
+            // get courses
+            List<Course> courses = learner.getCourses();
+            for (Course course : courses) {
+                // break association of all courses for the learner
+                course.getLearners().remove(learner);
+            }
+            // now delete the learner
+            entityManager.remove(learner);
+        }
+    }
 }

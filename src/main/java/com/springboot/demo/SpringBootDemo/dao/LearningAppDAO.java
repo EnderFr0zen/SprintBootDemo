@@ -40,4 +40,6 @@ public interface LearningAppDAO {
     Learner findLearnerAndCoursesByLearnerId(int id);
 
     void update(Learner learner);
+
+    void deleteLearnerById(int id);
 }

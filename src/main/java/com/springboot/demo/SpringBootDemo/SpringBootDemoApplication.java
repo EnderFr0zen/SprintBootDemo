@@ -42,6 +42,7 @@ public class SpringBootDemoApplication {
 			deleteInstructorDetail(learningAppDAO);
 			deleteInstructor(learningAppDAO);
 			deleteCourse(learningAppDAO);
+			deleteLearner(learningAppDAO);
 		};
 	}
 
@@ -227,9 +228,11 @@ public class SpringBootDemoApplication {
 		// create the students
 		Learner learner1 = new Learner("Cynwell", "Liao", "cynwell@email.com");
 		Learner learner2 = new Learner("Ninni", "Yang", "ninni@email.com");
+		Learner learner3 = new Learner("Test", "Fordelete", "test@email.com");
 		// add students to the course
 		course.addLearner(learner1);
 		course.addLearner(learner2);
+		course.addLearner(learner3);
 		// save the course and associated students
 		System.out.println("Saving the course: " + course);
 		System.out.println("The associated learners: " + course.getLearners());
@@ -267,6 +270,14 @@ public class SpringBootDemoApplication {
 		System.out.println("The associated courses: " + learner.getCourses());
 		learningAppDAO.update(learner);
 		System.out.println("addMoreCoursesForLearner Done");
+	}
+
+	private void deleteLearner(LearningAppDAO learningAppDAO) {
+		int id = 3;
+		System.out.println("Deleting learner id: " + id);
+		System.out.println(learningAppDAO.findLearnerAndCoursesByLearnerId(id));
+		learningAppDAO.deleteLearnerById(id);
+		System.out.println("deleteLearner Done");
 	}
 
 	@Bean
