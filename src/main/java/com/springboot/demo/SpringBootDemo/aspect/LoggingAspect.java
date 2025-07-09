@@ -2,6 +2,7 @@ package com.springboot.demo.SpringBootDemo.aspect;
 
 import com.springboot.demo.SpringBootDemo.entity.Account;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
@@ -75,6 +76,23 @@ public class LoggingAspect {
         // print out which method we are advising on
         String method = joinPoint.getSignature().toShortString();
         System.out.println("\n --- Executing @After (Finally) Advice on " + method + " ---");
+    }
+
+    @Around("execution(* com.springboot.demo.SpringBootDemo.service.*.getFortune(..))")
+    public Object aroundGetFortune(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+        // print out method we are advertising on
+        String method = proceedingJoinPoint.getSignature().toShortString();
+        System.out.println("\n --- Executing @Around Advice on " + method + " ---");
+        // get begin timestamp
+        long startTime = System.currentTimeMillis();
+        // execute the method
+        Object result = proceedingJoinPoint.proceed();
+        // get end timestamp
+        long endTime = System.currentTimeMillis();
+        // compute duration and display it
+        long executionTime = endTime - startTime;
+        System.out.println("Execution time: " + (executionTime / 1000.0) + " seconds ---");
+        return result;
     }
 
 //    @Before("execution(* com.springboot.demo.SpringBootDemo.dao.*.*(..))")

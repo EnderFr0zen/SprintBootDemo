@@ -5,6 +5,7 @@ import com.springboot.demo.SpringBootDemo.dao.LearningAppDAO;
 import com.springboot.demo.SpringBootDemo.dao.MembershipDAO;
 import com.springboot.demo.SpringBootDemo.dao.StudentDAO;
 import com.springboot.demo.SpringBootDemo.entity.*;
+import com.springboot.demo.SpringBootDemo.service.TrafficFortuneService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,12 +23,13 @@ public class SpringBootDemoApplication {
 
 	@Bean
 	@Profile("springaop")
-	public CommandLineRunner springAOPCommandLineRunner(AccountDAO accountDAO, MembershipDAO membershipDAO) {
+	public CommandLineRunner springAOPCommandLineRunner(AccountDAO accountDAO, MembershipDAO membershipDAO, TrafficFortuneService trafficFortuneService) {
 		return runner -> {
 			demoBeforeAdvice(accountDAO, membershipDAO);
 			demoAfterReturningAdvice(accountDAO);
 			demoAfterThrowingAdvice(accountDAO);
 			demoAfterAdvice(accountDAO);
+			demoAroundAdvice(trafficFortuneService);
 		};
 	}
 
@@ -83,6 +85,13 @@ public class SpringBootDemoApplication {
 		}
 		// display accounts
 		System.out.println(accounts);
+	}
+
+	private void demoAroundAdvice(TrafficFortuneService trafficFortuneService) {
+		System.out.println("\n| demoAroundAdvice |");
+		System.out.println("Calling getFortune()");
+		String fortune = trafficFortuneService.getFortune();
+		System.out.println("Fortune: " + fortune);
 	}
 
 	@Bean
